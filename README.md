@@ -1,10 +1,8 @@
-# Oli Navigation
-
-### Overview
+# Overview
 - No-one is able to set up ros and webots so instead, we have looked for alternatives.
 - One alternative found is MATLAB
 
-### MATLAB
+# MATLAB
 
 - [Lidar toolbox](https://www.mathworks.com/help/lidar/index.html?searchHighlight=lidar&s_tid=srchtitle)
 	- can use this to interpret data from Lidar sensors for navigation
@@ -19,7 +17,7 @@ With the above software we are able to:
 2. Build SLAM with Lidar Sensor Data
 3. Plan a route between two points using SLAM
 
-### How to run
+# How to run
 1. Connect to Dice remotely using Remote Desktop
 	- [Mac](http://computing.help.inf.ed.ac.uk/RDPonMac) 
 	- [Windows](http://computing.help.inf.ed.ac.uk/RDPonWindows)
@@ -39,7 +37,7 @@ With the above software we are able to:
 
 ![Occupancy Grid with planned route](images/rootREADme/Occupancy%20Grid.png)
 
-### TODO:
+# TODO:
 1. Create simulations
 	- Haven't explored all that MATLAB has to offer in this respect so maybe there is something they provide something for this?
 	- Otherwise the provided examples above show how we can create 2d visualisations.
