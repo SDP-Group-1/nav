@@ -31,10 +31,14 @@ With the above software we are able to:
 
 These figures are what you should get if you combine the examples:
 
-![Pose Graph](./images/plot.png "Title")
-![First Loop Closure](./images/plot.png)
-![Final Built Map](./images/plot.png)
-![Occupancy Grid with planned route](./images/plot.png)
+![foo](images/rootREADme/Pose%20Graph.png)
+
+![First Loop Closure](images/rootREADme/First%20Loop%20Closure.png)
+
+![Final Built Map](images/rootREADme/Final%20Built%20Map.png)
+
+![Occupancy Grid with planned route](images/rootREADme/Occupancy%20Grid.png)
+
 ### TODO:
 1. Create simulations
 	- Haven't explored all that MATLAB has to offer in this respect so maybe there is something they provide something for this?
