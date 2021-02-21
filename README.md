@@ -29,7 +29,7 @@ With the above software we are able to:
 	b.  `matlab`
 3. MATLAB will now open and you can follow along the above examples.
 
-These figures are what you should get if you combine the examples:
+# Expected Result from Combining Examples Above
 
 ![foo](images/rootREADme/Pose%20Graph.png)
 
