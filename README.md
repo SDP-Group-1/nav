@@ -23,8 +23,8 @@ With the above software we are able to:
 	- [Windows](http://computing.help.inf.ed.ac.uk/RDPonWindows)
 	- [Other](http://computing.help.inf.ed.ac.uk/remote-desktop). Look at "How to get started with remote desktop" section.
 2. Open Terminal within the Remote Desktop and run
-	a. `ssh s18*****.lab.inf.ed.ac.uk`
-	b.  `matlab`
+	- `ssh s18*****.lab.inf.ed.ac.uk`
+	-  `matlab`
 3. MATLAB will now open and you can follow along the above examples.
 
 # Expected Result from Combining Examples Above
