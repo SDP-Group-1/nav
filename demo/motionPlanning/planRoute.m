@@ -53,3 +53,26 @@ planner.MaxIterations = 30000;
 % stops.
 
 planner.GoalReachedFcn = @GoalReachedFcn;
+
+% Plan the path between the start and goal. Because of the random 
+% sampling, this example sets the rng seed for consistent results.
+rng(0,'twister')
+
+[pthObj, solnInfo] = plan(planner, start, goal);
+
+% Show the occupancy map. Plot the search tree from the solnInfo. 
+% Interpolate and overlay the final path.
+show(occGrid)
+hold on
+
+% Search tree
+plot(solnInfo.TreeData(:,1), solnInfo.TreeData(:,2), '.-');
+
+% Interpolate and plot path
+interpolate(pthObj,300)
+plot(pthObj.States(:,1), pthObj.States(:,2), 'r-', 'LineWidth', 2)
+
+% Show the start and goal in the grid map
+plot(start(1), start(2), 'ro')
+plot(goal(1), goal(2), 'mo')
+hold off
