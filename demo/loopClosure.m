@@ -28,24 +28,6 @@ slamAlg = lidarSLAM(mapResolution, maxLidarRange);
 slamAlg.LoopClosureThreshold = 210;  
 slamAlg.LoopClosureSearchRadius = 8;
 
-% Observe the Map Building Process with Initial 10 Scans
-% Incrementally add scans to the slamAlg object. Scan numbers are 
-% printed if added to the map. The object rejects scans if the distance 
-% between scans is too small. Add the first 10 scans first to test your 
-% algorithm.
-for i=1:10
-    [isScanAccepted, loopClosureInfo, optimizationInfo] = addScan(slamAlg, scans{i});
-    if isScanAccepted
-        fprintf('Added scan %d \n', i);
-    end
-end
-
-% Reconstruct the scene by plotting the scans and poses tracked by the 
-% slamAlg.
-figure;
-show(slamAlg);
-title({'Map of the Environment','Pose Graph for Initial 10 Scans'});
-
 % Observe the Effect of Loop Closures and the Optimization Process
 % Continue to add scans in a loop. Loop closures should be automatically 
 % detected as the robot moves. Pose graph optimization is performed 

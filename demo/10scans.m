@@ -45,35 +45,3 @@ end
 figure;
 show(slamAlg);
 title({'Map of the Environment','Pose Graph for Initial 10 Scans'});
-
-% Observe the Effect of Loop Closures and the Optimization Process
-% Continue to add scans in a loop. Loop closures should be automatically 
-% detected as the robot moves. Pose graph optimization is performed 
-% whenever a loop closure is identified. The output optimizationInfo has
-% a field, IsPerformed, that indicates when pose graph optimization 
-% occurs..
-
-% Plot the scans and poses whenever a loop closure is identified and 
-% verify the results visually. This plot shows overlaid scans and an 
-% optimized pose graph for the first loop closure. A loop closure edge is 
-% added as a red link.
-firstTimeLCDetected = false;
-
-figure;
-for i=10:length(scans)
-    [isScanAccepted, loopClosureInfo, optimizationInfo] = addScan(slamAlg, scans{i});
-    if ~isScanAccepted
-        continue;
-    end
-    % visualize the first detected loop closure, if you want to see the
-    % complete map building process, remove the if condition below
-    if optimizationInfo.IsPerformed && ~firstTimeLCDetected
-        show(slamAlg, 'Poses', 'off');
-        hold on;
-        show(slamAlg.PoseGraph); 
-        hold off;
-        firstTimeLCDetected = true;
-        drawnow
-    end
-end
-title('First loop closure');
