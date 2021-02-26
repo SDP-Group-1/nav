@@ -42,7 +42,7 @@ end
 
 % Reconstruct the scene by plotting the scans and poses tracked by the 
 % slamAlg.
-figure;
+figure(1);
 show(slamAlg);
 title({'Map of the Environment','Pose Graph for Initial 10 Scans'});
 
@@ -59,7 +59,7 @@ title({'Map of the Environment','Pose Graph for Initial 10 Scans'});
 % added as a red link.
 firstTimeLCDetected = false;
 
-figure;
+figure(2);
 for i=10:length(scans)
     [isScanAccepted, loopClosureInfo, optimizationInfo] = addScan(slamAlg, scans{i});
     if ~isScanAccepted
