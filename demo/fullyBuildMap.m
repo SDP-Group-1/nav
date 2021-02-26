@@ -41,8 +41,14 @@ slamAlg.LoopClosureSearchRadius = 8;
 % added as a red link.
 firstTimeLCDetected = false;
 
-for i=1:length(scans)
+figure;
+for i=10:length(scans)
     [isScanAccepted, loopClosureInfo, optimizationInfo] = addScan(slamAlg, scans{i});
+    show(slamAlg, 'Poses', 'off');
+    hold on;
+    show(slamAlg.PoseGraph);
+    hold off;
+    drawnow
 end
 
 % Plot the final built map after all scans are added to the slamAlg object.

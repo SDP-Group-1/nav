@@ -40,9 +40,14 @@ slamAlg.LoopClosureSearchRadius = 8;
 % optimized pose graph for the first loop closure. A loop closure edge is 
 % added as a red link.
 firstTimeLCDetected = false;
-
-for i=0:length(scans)
-    addScan(slamAlg, scans{i});
+figure;
+for i=10:length(scans)
+   addScan(slamAlg, scans{i});
+   show(slamAlg, 'Poses', 'off');
+   hold on;
+   show(slamAlg.PoseGraph);
+   hold off;
+   drawnow
 end
 
 % The optimized scans and poses can be used to generate a occupancyMap, 

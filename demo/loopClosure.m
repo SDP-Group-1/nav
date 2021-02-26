@@ -42,20 +42,22 @@ slamAlg.LoopClosureSearchRadius = 8;
 firstTimeLCDetected = false;
 
 figure;
-for i=1:length(scans)
+for i=10:length(scans)
     [isScanAccepted, loopClosureInfo, optimizationInfo] = addScan(slamAlg, scans{i});
     if ~isScanAccepted
         continue;
     end
     % visualize the first detected loop closure, if you want to see the
     % complete map building process, remove the if condition below
+    show(slamAlg, 'Poses', 'off');
+    hold on;
+    show(slamAlg.PoseGraph);
+    hold off;
+    drawnow
     if optimizationInfo.IsPerformed && ~firstTimeLCDetected
-        show(slamAlg, 'Poses', 'off');
-        hold on;
-        show(slamAlg.PoseGraph); 
-        hold off;
         firstTimeLCDetected = true;
-        drawnow
+        break
     end
+    
 end
 title('First loop closure');
