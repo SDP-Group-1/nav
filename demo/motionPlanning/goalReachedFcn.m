@@ -1,4 +1,4 @@
-function isReached = GoalReachedFcn(planner,currentState,goalState)
+function isReached = GoalReachedFcn(planner, goalState, newState)
     isReached = false;
     threshold = 0.1;
     if planner.StateSpace.distance(newState, goalState) < threshold
