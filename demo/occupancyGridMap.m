@@ -41,21 +41,20 @@ slamAlg.LoopClosureSearchRadius = 8;
 % added as a red link.
 firstTimeLCDetected = false;
 
-figure;
-for i=1:length(scans)
-    [isScanAccepted, loopClosureInfo, optimizationInfo] = addScan(slamAlg, scans{i});
-    if ~isScanAccepted
-        continue;
-    end
-    % visualize the first detected loop closure, if you want to see the
-    % complete map building process, remove the if condition below
-    if optimizationInfo.IsPerformed && ~firstTimeLCDetected
-        show(slamAlg, 'Poses', 'off');
-        hold on;
-        show(slamAlg.PoseGraph); 
-        hold off;
-        firstTimeLCDetected = true;
-        drawnow
-    end
+for i=0:length(scans)
+    addScan(slamAlg, scans{i});
 end
-title('First loop closure');
+
+% The optimized scans and poses can be used to generate a occupancyMap, 
+% which represents the environment as a probabilistic occupancy grid.
+[scans, optimizedPoses]  = scansAndPoses(slamAlg);
+map = buildMap(scans, optimizedPoses, mapResolution, maxLidarRange);
+
+% Visualize the occupancy grid map populated with the laser scans and the 
+% optimized pose graph.
+figure; 
+show(map);
+hold on
+show(slamAlg.PoseGraph, 'IDs', 'off');
+hold off
+title('Occupancy Grid Map Built Using Lidar SLAM');
