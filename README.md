@@ -1,7 +1,3 @@
-# Overview
-- No-one is able to set up ros and webots so instead, we have looked for alternatives.
-- One alternative found is MATLAB
-
 # MATLAB
 
 - [Lidar toolbox](https://www.mathworks.com/help/lidar/index.html?searchHighlight=lidar&s_tid=srchtitle)
@@ -17,7 +13,7 @@ With the above software we are able to:
 2. Build SLAM with Lidar Sensor Data
 3. Plan a route between two points using SLAM
 
-# How to run
+# How to run MATLAB on DICE
 1. Connect to Dice remotely using Remote Desktop
 	- [Mac](http://computing.help.inf.ed.ac.uk/RDPonMac) 
 	- [Windows](http://computing.help.inf.ed.ac.uk/RDPonWindows)
@@ -25,17 +21,10 @@ With the above software we are able to:
 2. Open Terminal within the Remote Desktop and run
 	- `ssh s18*****.lab.inf.ed.ac.uk`
 	-  `matlab`
-3. MATLAB will now open and you can follow along the above examples.
+3. MATLAB will now open
 
-# Expected Result from Combining Examples Above
-
-![foo](images/rootREADme/Pose%20Graph.png)
-
-![First Loop Closure](images/rootREADme/First%20Loop%20Closure.png)
-
-![Final Built Map](images/rootREADme/Final%20Built%20Map.png)
-
-![Occupancy Grid with planned route](images/rootREADme/Occupancy%20Grid.png)
+# Demo
+See /demos/README.md
 
 # TODO:
 1. Create simulations
