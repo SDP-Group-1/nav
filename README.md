@@ -23,7 +23,7 @@ With the above software we are able to:
 	-  `matlab`
 3. MATLAB will now open
 
-# Demo
+# Demos
 See /demos/README.md
 
 # TODO:
