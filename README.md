@@ -26,12 +26,11 @@ With the above software we are able to:
 # Demos
 See /demos/README.md
 
-# TODO:
-1. Create simulations
-	- Haven't explored all that MATLAB has to offer in this respect so maybe there is something they provide something for this?
-	- Otherwise the provided examples above show how we can create 2d visualisations.
-2. The above examples use Lidar, our robot doesn't use Lidar... 
+# Potential next steps
+1. Create end to end system
+2. Incorporate webots to create simulations
+3. The above examples use Lidar, our robot doesn't use Lidar... 
 	- Can we use Lidar? 
 	- Maybe we can change from Lidar to something else and still use the above toolboxes?
-3. Incorporate a robot using an example from [matlab](https://uk.mathworks.com/help/robotics/ug/path-following-for-differential-drive-robot.html)
-4. Add to this list as you see fit.
+5. Incorporate actual motion by using a robot using an example from [matlab](https://uk.mathworks.com/help/robotics/ug/path-following-for-differential-drive-robot.html)
+6. Add to this list as you see fit.
