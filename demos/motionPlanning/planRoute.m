@@ -51,8 +51,7 @@ planner.MaxIterations = 30000;
 % if a feasible path reaches the goal within a set threshold. The 
 % function returns true when the goal has been reached, and the planner 
 % stops.
-
-planner.GoalReachedFcn = @GoalReachedFcn;
+planner.GoalReachedFcn = @goalReachedFcn;
 
 % Plan the path between the start and goal. Because of the random 
 % sampling, this example sets the rng seed for consistent results.
