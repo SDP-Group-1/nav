@@ -1,0 +1,19 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation -0.6931032800836722 0.6931032800836722 0.1980295085953349 0.75
+  position 1.3094455293820075 1.7279504710303477 2.486474084261772
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  wallHeight 0.3
+}
+TurtleBot3Burger {
+  hidden rotation_10 0.5775681974887675 0.7792587721317256 -0.243250371644796 3.118527634610191
+  controller "lidar_readings"
+}
