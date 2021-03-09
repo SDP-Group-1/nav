@@ -1,4 +1,4 @@
-# MATLAB
+# MATLAB Libaries
 
 - [Lidar toolbox](https://www.mathworks.com/help/lidar/index.html?searchHighlight=lidar&s_tid=srchtitle)
 	- can use this to interpret data from Lidar sensors for navigation
@@ -8,29 +8,23 @@
 	- [Motion Planning](https://www.mathworks.com/help/nav/motion-planning.html)
 		- [example implementation](https://www.mathworks.com/help/nav/ug/plan-mobile-robot-paths-using-rrt.html)
 
-With the above software we are able to:
-1. Interpret Lidar Sensor Data
-2. Build SLAM with Lidar Sensor Data
-3. Plan a route between two points using SLAM
-
-# How to run MATLAB on DICE
-1. Connect to Dice remotely using Remote Desktop
-	- [Mac](http://computing.help.inf.ed.ac.uk/RDPonMac) 
-	- [Windows](http://computing.help.inf.ed.ac.uk/RDPonWindows)
-	- [Other](http://computing.help.inf.ed.ac.uk/remote-desktop). Look at "How to get started with remote desktop" section.
-2. Open Terminal within the Remote Desktop and run
-	- `ssh s18*****.lab.inf.ed.ac.uk`
-	-  `matlab`
-3. MATLAB will now open
-
 # Demos
 See /demos/README.md
 
-# Potential next steps
-1. Create end to end system
-2. Incorporate webots to create simulations
-3. The above examples use Lidar, our robot doesn't use Lidar... 
-	- Can we use Lidar? 
-	- Maybe we can change from Lidar to something else and still use the above toolboxes?
-5. Incorporate actual motion by using a robot using an example from [matlab](https://uk.mathworks.com/help/robotics/ug/path-following-for-differential-drive-robot.html)
-6. Add to this list as you see fit.
+# MATLAB and Webots on DICE
+You are not able to run these together on Dice due to the fact that you have to ssh into lab to use MATLAB and webots is on another path. You may try to do this but I encountered many errors related to MATLAB not being on the same path as webots. I tried adding to the path using PATH=$PATH but it still didn't work.
+
+Instead, download webots and matlab on your personal computer or in a virtual machine.
+
+# Robot
+Chosen robot: [TurtleBot3Burger](https://cyberbotics.com/doc/guide/turtlebot3-burger).
+
+Import the robot into your world and it comes along with a [LDS-01](https://cyberbotics.com/doc/guide/lidar-sensors#robotis-lds-01) lidar sensor.
+
+For an example of the robot set-up, look at the basic-example folder within the webots folder in this repository.
+
+# Basic Robot Movement
+To move the robot, you must create a controller. For a very basic example of a controller, look at the controller within the basic-example within the webots folder in this repository.
+
+Essentially, we create a loop and at every time-step, we update the velocity of the left and right motor. If we want the turtlebot to move left, we can increase the velocity of the right motor.
+
