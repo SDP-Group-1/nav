@@ -8,9 +8,6 @@
 	- [Motion Planning](https://www.mathworks.com/help/nav/motion-planning.html)
 		- [example implementation](https://www.mathworks.com/help/nav/ug/plan-mobile-robot-paths-using-rrt.html)
 
-# Demos
-See /demos/README.md
-
 # MATLAB and Webots on DICE
 You are not able to run these together on Dice due to the fact that you have to ssh into lab to use MATLAB and webots is on another path. You may try to do this but I encountered many errors related to MATLAB not being on the same path as webots. I tried adding to the path using PATH=$PATH but it still didn't work.
 
