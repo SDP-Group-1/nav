@@ -26,7 +26,14 @@ For an example of the robot set-up, look at the basic-example folder within the 
 # Basic Robot Movement
 To move the robot, you must create a controller. For a very basic example of a controller, look at the controller within the basic-example within the webots folder in this repository.
 
-Essentially, we create a loop and at every time-step, we update the velocity of the left and right motor. If we want the turtlebot to move left, we can increase the velocity of the right motor.
+Essentially, we create a loop and at every time-step, we update the velocity of the left and right wheel motor. If we want the turtlebot to move left, we can increase the velocity of the right wheel motor.
 
-For more detail on velocity control, please see [here](https://cyberbotics.com/doc/reference/motor#motor-functions).
+For more detail on velocity control, see [here](https://cyberbotics.com/doc/reference/motor#motor-functions).
 
+# Lidar Readings 
+
+Just like for basic movement, the lidar must be controlled within a controller. For a basic example, please see the lidar-readings webots project located within the webots folder.
+
+At every time stop, we read the lidar readings. The lidar readings are represented as a an array of points corresponding to the distance to the object being measured at that angle.
+
+For more detail about the lidar, see [here](https://cyberbotics.com/doc/reference/lidar?tab-language=matlab#wb_lidar_enable).
