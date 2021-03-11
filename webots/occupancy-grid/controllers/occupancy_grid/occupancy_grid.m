@@ -4,7 +4,7 @@
 
 TIME_STEP = 200;
 
-LEFT_BASE_SPEED = 1.5;
+LEFT_BASE_SPEED = 5;
 RIGHT_BASE_SPEED = 1;
 
 % get the motor devices
@@ -50,5 +50,7 @@ while wb_robot_step(TIME_STEP) ~= -1
   scan_index = scan_index + 1;
   
 end
+
+
 
 % cleanup code goes here: write data to files, etc.
