@@ -21,4 +21,4 @@ for i=1:length(webots_scans)
 end
 
 show(slamAlg);
-title({'Map of the Environment','Pose Graph for Initial 10 Scans'});
+title({'Map of the Environment','Pose Graph for the Lidar Scans'});
