@@ -11,6 +11,7 @@ TexturedBackground {
 TexturedBackgroundLight {
 }
 RectangleArena {
+  floorSize 1 5
   wallHeight 0.3
 }
 TurtleBot3Burger {
