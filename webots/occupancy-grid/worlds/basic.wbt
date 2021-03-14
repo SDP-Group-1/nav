@@ -3,19 +3,30 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation -0.6931032800836722 0.6931032800836722 0.1980295085953349 0.75
-  position 1.3094455293820075 1.7279504710303477 2.486474084261772
+  orientation -0.5792030634340514 -0.7672434948481981 -0.27542917587237054 1.1314225277926084
+  position -3.281144880288684 6.151304922710169 2.8031171159394814
 }
 TexturedBackground {
 }
 TexturedBackgroundLight {
 }
 RectangleArena {
+  translation 0 0 0.03
   floorSize 1 5
   wallHeight 0.3
 }
 TurtleBot3Burger {
-  hidden rotation_10 0.5775681974887675 0.7792587721317256 -0.243250371644796 3.118527634610191
   controller "occupancy_grid"
   supervisor TRUE
+}
+OilBarrel {
+  translation 0 0.44 -2.46
+}
+OilBarrel {
+  translation -0.49 0.44 -0.73
+  name "oil barrel(1)"
+}
+Pedestrian {
+  translation 0.26 1.28 -1.38
+  rotation 0 1 0 -1.5707953071795862
 }
