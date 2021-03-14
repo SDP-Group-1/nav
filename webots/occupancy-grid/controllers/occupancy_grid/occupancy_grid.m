@@ -2,10 +2,10 @@
 % File:          basic_movement.m
 
 
-TIME_STEP = 3000;
+TIME_STEP = 2000;
 
-LEFT_BASE_SPEED = 1.5;
-RIGHT_BASE_SPEED = 1.5;
+LEFT_BASE_SPEED = 3;
+RIGHT_BASE_SPEED = 3;
 
 % set up supervisor
 robot_node = wb_supervisor_node_get_self();
@@ -34,7 +34,7 @@ lidar = wb_robot_get_device('LDS-01');
 wb_lidar_enable(lidar, TIME_STEP);
 wb_lidar_enable_point_cloud(lidar);
 
-num_scans = 15;
+num_scans = 10;
 webots_scans = lidarScan.empty(num_scans,0);
 scan_index = 1;
 
