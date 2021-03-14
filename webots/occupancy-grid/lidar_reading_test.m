@@ -1,57 +1,29 @@
 load('~/Desktop/lidar_readings_for_test.mat');
+load('offlineSlamData.mat');
 
-maxLidarRange = 2.8;
+maxLidarRange = 3;
 mapResolution = 20;
 slamAlg = lidarSLAM(mapResolution, maxLidarRange);
 
-slamAlg.LoopClosureThreshold = 210;
-slamAlg.LoopClosureSearchRadius = 10;
+slamAlg.LoopClosureThreshold = 360;
+slamAlg.LoopClosureSearchRadius = 3;
+firstTimeLCDetected = false;
 
-    figure;
-for i=1:50
- 
-    [isScanAccepted, loopClosureInfo, optimizationInfo] = addScan(slamAlg, lidar_scans{i});
-    
-    if isScanAccepted
-        fprintf('Added scan %d \n', i);
-    end
-    show(slamAlg, 'Poses', 'off');
-   hold on;
-   show(slamAlg.PoseGraph);
-   drawnow
-end
-
-% [scans, optimizedPoses] = scansAndPoses(slamAlg);
-% map = buildMap(lidar_scans, optimizedPoses, mapResolution, maxLidarRange);
-% 
-% figure; 
-% show(map);
-% hold on
-% show(slamAlg.PoseGraph, 'IDs', 'off');
-% hold off
-
-[updatedPose,stat] = optimizePoseGraph(slamAlg.PoseGraph);
 figure;
-show(updatedPose);
-title('Pose graph opt');
+for i=1:length(lidar_scans)
+    [isScanAccepted, loopClosureInfo, optimizationInfo] = addScan(slamAlg, lidar_scans{i});
+    if ~isScanAccepted
+        continue;
+    end
+end
+title('First loop closure');
 
-referenceScan = lidar_scans{1,16}
-currentScan = lidar_scans{1,40} 
-currScanCart = currentScan.Cartesian;
-refScanCart = referenceScan.Cartesian;
-class(referenceScan)
-figure
-plot(refScanCart(:,1),refScanCart(:,2),'k.');
+[scans, optimizedPoses]  = scansAndPoses(slamAlg);
+map = buildMap(scans, optimizedPoses, mapResolution, maxLidarRange);
+
+figure; 
+show(map);
 hold on
-plot(currScanCart(:,1),currScanCart(:,2),'r.');
-legend('Reference laser scan','Current laser scan','Location','NorthWest');
-transform = matchScans(currentScan,referenceScan)
-
-transScan = transformScan(currentScan,transform)
-figure
-plot(refScanCart(:,1),refScanCart(:,2),'k.');
-hold on
-transScanCart = transScan.Cartesian;
-plot(transScanCart(:,1),transScanCart(:,2),'r.')
-legend('Reference laser scan','Transformed current laser scan','Location','NorthWest');
-
+show(slamAlg.PoseGraph, 'IDs', 'off');
+hold off
+title('Occupancy Grid Map Built Using Lidar SLAM');

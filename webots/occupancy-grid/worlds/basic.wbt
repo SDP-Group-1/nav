@@ -16,4 +16,5 @@ RectangleArena {
 TurtleBot3Burger {
   hidden rotation_10 0.5775681974887675 0.7792587721317256 -0.243250371644796 3.118527634610191
   controller "occupancy_grid"
+  supervisor TRUE
 }
