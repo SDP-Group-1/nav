@@ -1,4 +1,4 @@
-load('~/Desktop/lidar_readings_for_test.mat');
+load('./webotsLidarReadings.mat');
 load('offlineSlamData.mat');
 
 maxLidarRange = 3;
@@ -10,8 +10,8 @@ slamAlg.LoopClosureSearchRadius = 3;
 firstTimeLCDetected = false;
 
 figure;
-for i=1:length(lidar_scans)
-    [isScanAccepted, loopClosureInfo, optimizationInfo] = addScan(slamAlg, lidar_scans{i});
+for i=1:length(webots_scans)
+    [isScanAccepted, loopClosureInfo, optimizationInfo] = addScan(slamAlg, webots_scans{i});
     if ~isScanAccepted
         continue;
     end

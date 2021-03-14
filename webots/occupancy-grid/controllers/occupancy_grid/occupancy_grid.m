@@ -34,8 +34,8 @@ lidar = wb_robot_get_device('LDS-01');
 wb_lidar_enable(lidar, TIME_STEP);
 wb_lidar_enable_point_cloud(lidar);
 
-num_scans = 20;
-lidar_scans = lidarScan.empty(num_scans,0);
+num_scans = 15;
+webots_scans = lidarScan.empty(num_scans,0);
 scan_index = 1;
 
 while wb_robot_step(TIME_STEP) ~= -1
@@ -55,10 +55,10 @@ while wb_robot_step(TIME_STEP) ~= -1
     coordinates(i, 2) = point_cloud(i).x;
   end
   lidar_scan = lidarScan(coordinates);
-  lidar_scans{scan_index} = lidar_scan;
+  webots_scans{scan_index} = lidar_scan;
     
   if scan_index == num_scans
-    save('~/Desktop/lidar_readings_for_test.mat', 'lidar_scans')
+    save('../../webotsLidarReadings.mat', 'webots_scans')
     return
   end
   scan_index = scan_index + 1;
