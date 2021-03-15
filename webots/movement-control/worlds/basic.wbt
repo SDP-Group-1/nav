@@ -1,0 +1,22 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation -0.5792030634340514 -0.7672434948481981 -0.27542917587237054 1.1314225277926084
+  position -5.9788026575351445 6.867836918518509 5.607109905192713
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  translation 0 0 0.03
+  floorSize 5 5
+  wallHeight 0.3
+}
+TurtleBot3Burger {
+  hidden rotation_10 0.9999902221356683 -0.004422174855050446 1.6149585325001388e-06 0.0007303981879080818
+  controller "movement_control"
+  supervisor TRUE
+}
