@@ -1,4 +1,4 @@
-load('./webotsLidarReadings.mat');
+load('webotsLidarReadings.mat');
 load('offlineSlamData.mat');
 
 maxLidarRange = 3;
