@@ -20,8 +20,7 @@ if robot_node == 0
 end
 
 trans_field = wb_supervisor_node_get_field(robot_node, 'translation');
-% pos_field = wb_supervisor_node_get_orientation(robot_node)
-
+or_field = wb_supervisor_node_get_field(robot_node, 'rotation');
 % get the motor devices
 left_motor = wb_robot_get_device('left wheel motor');
 right_motor = wb_robot_get_device('right wheel motor');
@@ -40,7 +39,9 @@ while wb_robot_step(TIME_STEP) ~= -1
   wb_motor_set_velocity(right_motor, RIGHT_BASE_SPEED);
   
   trans_values = wb_supervisor_field_get_sf_vec3f(trans_field);
-  wb_console_print(sprintf('MY_ROBOT is at position: %g %g %g\n', trans_values(1), trans_values(2), trans_values(3)), WB_STDOUT);  
+  x_y_z_alpha_array = wb_supervisor_field_get_sf_rotation(or_field);
+  wb_console_print(sprintf('MY_ROBOT is at position: %g %g %g\n', trans_values(1), trans_values(2), trans_values(3)), WB_STDOUT);
+  wb_console_print(sprintf('Rotation of %g radians around %g %g %g\n', x_y_z_alpha_array(4), x_y_z_alpha_array(1), x_y_z_alpha_array(2), x_y_z_alpha_array(3)), WB_STDOUT);  
   
 end
 
