@@ -35,9 +35,9 @@ trans_field = wb_supervisor_node_get_field(robot_node, 'translation');
 
 target_x = 1;
 target_z = -1.39709;
+flag = 0;
 
 while wb_robot_step(TIME_STEP) ~= -1
-  flag = 0;
 
   % get current rotation
   x_y_z_alpha_array = wb_supervisor_field_get_sf_rotation(or_field);
@@ -51,11 +51,12 @@ while wb_robot_step(TIME_STEP) ~= -1
   % get target alpha
   num = curr_x*target_x + curr_z * target_z;
   denom = sqrt(((curr_x)^2+(curr_z)^2)*((target_x)^2+(target_z)^2));
-  target_alpha = - acos(num/denom);
+  target_alpha1 = - acos(num/denom);
+  target_alpha = atan2((target_z-curr_z),(target_x-curr_x));
   wb_console_print(sprintf('curr alpha: %g, target alpha: %g.\n', round(curr_alpha,3), round(target_alpha,3)), WB_STDOUT);
 
   
-  if abs(target_alpha - curr_alpha) > 0.05
+  if abs(target_alpha - curr_alpha) > 0.005
     if round(target_alpha,3) < round(curr_alpha,3)
     wb_console_print(sprintf('curr alpha: %g, target alpha: %g.\n', round(curr_alpha,3), round(target_alpha,3)), WB_STDOUT);
     wb_motor_set_velocity(left_motor, 0.01);
