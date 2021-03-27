@@ -37,12 +37,14 @@ target_x = 1;
 target_z = -1.39709;
 flag = 0;
 
+phi_old=0; 
+phi_new=0;
 while wb_robot_step(TIME_STEP) ~= -1
 
   % get current rotation
   x_y_z_alpha_array = wb_supervisor_field_get_sf_rotation(or_field);
   curr_alpha = x_y_z_alpha_array(4);
-  
+
   % get current location
   trans_values = wb_supervisor_field_get_sf_vec3f(trans_field);
   curr_x = trans_values(1);
@@ -55,16 +57,19 @@ while wb_robot_step(TIME_STEP) ~= -1
   target_alpha = atan2((target_z-curr_z),(target_x-curr_x));
   wb_console_print(sprintf('curr alpha: %g, target alpha: %g.\n', round(curr_alpha,3), round(target_alpha,3)), WB_STDOUT);
 
-  
-  if abs(target_alpha - curr_alpha) > 0.005
+  err = target_alpha-phi_new;
+  w=0.1*err;
+  phi_new=0.1*err+phi_old;
+
+  if (abs(target_alpha) < abs(curr_alpha) - 0.05) || (abs(target_alpha) > abs(curr_alpha) + 0.05)
     if round(target_alpha,3) < round(curr_alpha,3)
     wb_console_print(sprintf('curr alpha: %g, target alpha: %g.\n', round(curr_alpha,3), round(target_alpha,3)), WB_STDOUT);
-    wb_motor_set_velocity(left_motor, 0.01);
-    wb_motor_set_velocity(right_motor, -0.01);
+    wb_motor_set_velocity(left_motor, sin(phi_new));
+    wb_motor_set_velocity(right_motor, cos(phi_new));
     else
     wb_console_print(sprintf('curr alpha: %g, target alpha: %g.\n', round(curr_alpha,3), round(target_alpha,3)), WB_STDOUT);
-    wb_motor_set_velocity(left_motor, -0.01);
-    wb_motor_set_velocity(right_motor, 0.01);
+    wb_motor_set_velocity(left_motor, cos(phi_new));
+    wb_motor_set_velocity(right_motor, sin(phi_new));
     end
   else  
     wb_console_print(sprintf('curr alpha: %g, target alpha: %g.\n', round(curr_alpha,3), round(target_alpha,3)), WB_STDOUT);
@@ -73,7 +78,8 @@ while wb_robot_step(TIME_STEP) ~= -1
     wb_motor_set_velocity(right_motor, RIGHT_BASE_SPEED);
     flag = 1
   end
-  
+  phi_old=atan2((target_x - curr_x),(target_z-curr_z));
+    
   wb_console_print(sprintf('MY_ROBOT is at position (x=%g, z=%g)\n', curr_x, curr_z), WB_STDOUT);  
   wb_console_print(sprintf('    target location x=%g, z=%g.\n', target_x, target_z), WB_STDOUT);  
     
