@@ -55,7 +55,7 @@ while wb_robot_step(TIME_STEP) ~= -1
   wb_console_print(sprintf('curr alpha: %g, target alpha: %g.\n', round(curr_alpha,3), round(target_alpha,3)), WB_STDOUT);
 
   
-  if (((round(target_alpha,3) + 0.05)< round(curr_alpha,3)) && flag == 0)  || (((round(target_alpha,3) - 0.05) > round(curr_alpha,3))&& flag == 0)
+  if abs(target_alpha - curr_alpha) > 0.05
     if round(target_alpha,3) < round(curr_alpha,3)
     wb_console_print(sprintf('curr alpha: %g, target alpha: %g.\n', round(curr_alpha,3), round(target_alpha,3)), WB_STDOUT);
     wb_motor_set_velocity(left_motor, 0.01);
