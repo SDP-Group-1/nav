@@ -1,8 +1,8 @@
 
 TIME_STEP = 2000;
 
-LEFT_BASE_SPEED = 3;
-RIGHT_BASE_SPEED = 3;
+LEFT_BASE_SPEED = 0.5
+RIGHT_BASE_SPEED = 0.5;
 
 % Set the start and goal poses
 start = [0, 0, 0];
@@ -51,25 +51,21 @@ while wb_robot_step(TIME_STEP) ~= -1
   curr_z = trans_values(3);
   
   % get target alpha
-  num = curr_x*target_x + curr_z * target_z;
-  denom = sqrt(((curr_x)^2+(curr_z)^2)*((target_x)^2+(target_z)^2));
-  target_alpha1 = - acos(num/denom);
-  target_alpha = atan2((target_z-curr_z),(target_x-curr_x));
+
+  target_alpha1 = atan2((target_z-curr_z),(target_x-curr_x));
+  target_alpha = atan((target_x-curr_x)/(target_z-curr_z));
+
   wb_console_print(sprintf('curr alpha: %g, target alpha: %g.\n', round(curr_alpha,3), round(target_alpha,3)), WB_STDOUT);
 
-  err = target_alpha-phi_new;
-  w=0.1*err;
-  phi_new=0.1*err+phi_old;
-
-  if (abs(target_alpha) < abs(curr_alpha) - 0.05) || (abs(target_alpha) > abs(curr_alpha) + 0.05)
+  if (abs(target_alpha) < abs(curr_alpha) - 0.05 && flag== 0) || (abs(target_alpha) > abs(curr_alpha) + 0.05 && flag == 0)
     if round(target_alpha,3) < round(curr_alpha,3)
     wb_console_print(sprintf('curr alpha: %g, target alpha: %g.\n', round(curr_alpha,3), round(target_alpha,3)), WB_STDOUT);
-    wb_motor_set_velocity(left_motor, sin(phi_new));
-    wb_motor_set_velocity(right_motor, cos(phi_new));
+    wb_motor_set_velocity(left_motor, 0.01);
+    wb_motor_set_velocity(right_motor, -0.01);
     else
     wb_console_print(sprintf('curr alpha: %g, target alpha: %g.\n', round(curr_alpha,3), round(target_alpha,3)), WB_STDOUT);
-    wb_motor_set_velocity(left_motor, cos(phi_new));
-    wb_motor_set_velocity(right_motor, sin(phi_new));
+    wb_motor_set_velocity(left_motor, -0.01);
+    wb_motor_set_velocity(right_motor, 0.01);
     end
   else  
     wb_console_print(sprintf('curr alpha: %g, target alpha: %g.\n', round(curr_alpha,3), round(target_alpha,3)), WB_STDOUT);
@@ -78,7 +74,6 @@ while wb_robot_step(TIME_STEP) ~= -1
     wb_motor_set_velocity(right_motor, RIGHT_BASE_SPEED);
     flag = 1
   end
-  phi_old=atan2((target_x - curr_x),(target_z-curr_z));
     
   wb_console_print(sprintf('MY_ROBOT is at position (x=%g, z=%g)\n', curr_x, curr_z), WB_STDOUT);  
   wb_console_print(sprintf('    target location x=%g, z=%g.\n', target_x, target_z), WB_STDOUT);  
@@ -93,9 +88,9 @@ while wb_robot_step(TIME_STEP) ~= -1
   wb_console_print(sprintf('    squared x=%g, z=%g.\n', x_sq, z_sq), WB_STDOUT);  
   
   dist_to_move = sqrt(x_sq + z_sq);
-  wb_console_print(sprintf('    %g ditance left to move.\n', dist_to_move), WB_STDOUT);  
+  wb_console_print(sprintf('    %g distance left to move.\n', dist_to_move), WB_STDOUT);  
   
-  if dist_to_move < 0.05
+  if dist_to_move < 0.1
     break;
   end
   
