@@ -1,11 +1,15 @@
 load('webotsLidarReadings.mat');
+load('offlineSlamData.mat');
 
-maxLidarRange = 3;
+maxLidarRange = 3.7;
 mapResolution = 20;
 slamAlg = lidarSLAM(mapResolution, maxLidarRange);
 
-slamAlg.LoopClosureThreshold = 1000;  
-slamAlg.LoopClosureSearchRadius = 1000;
+updated_threshold = 0.15;
+
+slamAlg.LoopClosureThreshold = 210;
+slamAlg.LoopClosureSearchRadius = 3;
+slamAlg.MovementThreshold = [updated_threshold, updated_threshold];
 
 figure;
 for i=1:length(webots_scans)
