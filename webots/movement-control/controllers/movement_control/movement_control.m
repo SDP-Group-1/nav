@@ -1,8 +1,8 @@
 
 TIME_STEP = 2000;
 
-LEFT_BASE_SPEED = 0.5
-RIGHT_BASE_SPEED = 0.5;
+LEFT_BASE_SPEED = 3;
+RIGHT_BASE_SPEED = 3;
 
 % Set the start and goal poses
 start = [0, 0, 0];
@@ -34,7 +34,7 @@ trans_field = wb_supervisor_node_get_field(robot_node, 'translation');
 
 
 target_x = 1;
-target_z = -1.39709;
+target_z = - 1.5;
 flag = 0;
 
 phi_old=0; 
@@ -52,20 +52,20 @@ while wb_robot_step(TIME_STEP) ~= -1
   
   % get target alpha
 
-  target_alpha1 = atan2((target_z-curr_z),(target_x-curr_x));
-  target_alpha = atan((target_x-curr_x)/(target_z-curr_z));
+  target_alpha = atan2((target_z-curr_z),(target_x-curr_x));
+  target_alpha1 = atan((target_x-curr_x)/(target_z-curr_z));
 
   wb_console_print(sprintf('curr alpha: %g, target alpha: %g.\n', round(curr_alpha,3), round(target_alpha,3)), WB_STDOUT);
 
   if (abs(target_alpha) < abs(curr_alpha) - 0.05 && flag== 0) || (abs(target_alpha) > abs(curr_alpha) + 0.05 && flag == 0)
     if round(target_alpha,3) < round(curr_alpha,3)
     wb_console_print(sprintf('curr alpha: %g, target alpha: %g.\n', round(curr_alpha,3), round(target_alpha,3)), WB_STDOUT);
-    wb_motor_set_velocity(left_motor, 0.01);
-    wb_motor_set_velocity(right_motor, -0.01);
+    wb_motor_set_velocity(left_motor, 0.1);
+    wb_motor_set_velocity(right_motor, -0.1);
     else
     wb_console_print(sprintf('curr alpha: %g, target alpha: %g.\n', round(curr_alpha,3), round(target_alpha,3)), WB_STDOUT);
-    wb_motor_set_velocity(left_motor, -0.01);
-    wb_motor_set_velocity(right_motor, 0.01);
+    wb_motor_set_velocity(left_motor, -0.1);
+    wb_motor_set_velocity(right_motor, 0.1);
     end
   else  
     wb_console_print(sprintf('curr alpha: %g, target alpha: %g.\n', round(curr_alpha,3), round(target_alpha,3)), WB_STDOUT);
@@ -90,7 +90,7 @@ while wb_robot_step(TIME_STEP) ~= -1
   dist_to_move = sqrt(x_sq + z_sq);
   wb_console_print(sprintf('    %g distance left to move.\n', dist_to_move), WB_STDOUT);  
   
-  if dist_to_move < 0.1
+  if dist_to_move < 0.4
     break;
   end
   
