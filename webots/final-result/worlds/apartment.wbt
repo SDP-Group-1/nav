@@ -37,10 +37,9 @@ DEF FLOOR Solid {
   locked TRUE
 }
 TurtleBot3Burger {
-  hidden rotation_4 -8.651895573879803e-06 0.9999999999625722 1.6910099681340355e-08 0.003908988037433048
   translation 1.51232 0 0.705706
   rotation 0 -1 0 1.57079
-  controller "occupancy_grid"
+  controller "robot_controller"
   supervisor TRUE
   extensionSlot [
     HokuyoUrg04lx {
