@@ -35,7 +35,7 @@ end
 % initialise for main loop
 load('occupancy_grid.mat');
 path = [];
-path_state_index = 2;
+path_state_index = 5;
 
 while wb_robot_step(TIME_STEP) ~= -1  
 
@@ -89,7 +89,7 @@ function [left_velocity_mult, right_velocity_mult, path_state_index] = follow_pa
   z_origin_webots = 0.705706;
   
   target_x = path.States(path_state_index,1) + x_origin_webots;
-  target_z = path.States(path_state_index,2) + z_origin_webots;
+  target_z = - path.States(path_state_index,2) + z_origin_webots;
   target_coordinate = [target_x, target_z];
   
   curr_x = curr_location(1);
@@ -98,21 +98,25 @@ function [left_velocity_mult, right_velocity_mult, path_state_index] = follow_pa
   left_velocity_mult = 0;
   right_velocity_mult = 0;
   
+  target_x
+  target_z
+  
   
   if has_reached_coordinate(curr_location, target_coordinate)
     path_state_index = path_state_index + 1
     return;
   end
   
-  if is_correct_angle()
-    
-    left_velocity_mult = 1;
-    right_velocity_mult = 1;
   
-  elseif
+  % if is_correct_angle()
+    
+    % left_velocity_mult = 1;
+    % right_velocity_mult = 1;
+  
+  % elseif
     % TODO implement angle bs
     % ur jobbo :) ? :'( 
-  end
+  % end
   
 end
 
