@@ -101,13 +101,18 @@ function [left_velocity_mult, right_velocity_mult, path_state_index] = follow_pa
   
   if has_reached_coordinate(curr_location, target_coordinate)
     path_state_index = path_state_index + 1
+    return;
   end
   
+  if is_correct_angle()
+    
+    left_velocity_mult = 1;
+    right_velocity_mult = 1;
   
-  
-  % either need to rotate or go forwards
-  
-  
+  elseif
+    % TODO implement angle bs
+    % ur jobbo :) ? :'( 
+  end
   
 end
 
