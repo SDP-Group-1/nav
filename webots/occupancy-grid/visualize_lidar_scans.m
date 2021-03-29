@@ -5,10 +5,10 @@ maxLidarRange = 3.7;
 mapResolution = 20;
 slamAlg = lidarSLAM(mapResolution, maxLidarRange);
 
-updated_threshold = 0.15;
+updated_threshold = 0.2;
 
-slamAlg.LoopClosureThreshold = 210;
-slamAlg.LoopClosureSearchRadius = 3;
+slamAlg.LoopClosureThreshold = 400;
+slamAlg.LoopClosureSearchRadius = 8;
 slamAlg.MovementThreshold = [updated_threshold, updated_threshold];
 
 figure;

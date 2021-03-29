@@ -3,8 +3,8 @@
 
 TIME_STEP = 100;
 
-LEFT_BASE_SPEED = 3;
-RIGHT_BASE_SPEED = 3;
+LEFT_BASE_SPEED = 6;
+RIGHT_BASE_SPEED = 6;
 
 % set up supervisor
 robot_node = wb_supervisor_node_get_self();
@@ -15,6 +15,7 @@ if robot_node == 0
 end
 
 trans_field = wb_supervisor_node_get_field(robot_node, 'translation');
+wb_keyboard_enable(TIME_STEP);
 
 % get the motor devices
 left_motor = wb_robot_get_device('left wheel motor');
@@ -37,65 +38,45 @@ wb_lidar_enable_point_cloud(lidar);
 min_range = wb_lidar_get_min_range(lidar);
 max_range = wb_lidar_get_max_range(lidar);
 
-num_scans = 40000;
+num_scans = 300;
 webots_scans = lidarScan.empty(num_scans,0);
 scan_index = 1;
 
 while wb_robot_step(TIME_STEP) ~= -1
 
-  wb_console_print(sprintf('scan_index: %g', scan_index), WB_STDOUT);
-
-  left_speed  = LEFT_BASE_SPEED;
-  right_speed = RIGHT_BASE_SPEED;
-
-  point_cloud = wb_lidar_get_point_cloud(lidar);
-  % 180 is forward, 90 is left, goes clockwise
-  range_image = wb_lidar_get_range_image(lidar);
-  res = wb_lidar_get_horizontal_resolution(lidar);
-  
-  nr_scans = 277;
-  right_scans = zeros(nr_scans);
-  left_scans = zeros(nr_scans);
-  
-  for i = 1:nr_scans
-    right_scans(i) = range_image(floor(res/2) + i);
-    left_scans(i) = range_image(55 + i);
-  end
-  
-  right_obstacle = false;
-  left_obstacle = false;
+  left_speed  = 0;
+  right_speed = 0;
    
-  for i = 1:nr_scans
-    if right_scans(i) < 0.05 + min_range
-      right_obstacle = true;
-      % wb_console_print(sprintf('    Right Obs found at %g', i + 180), WB_STDOUT);
-      break;
-    end
-    if left_scans(i) < 0.05 + min_range
-      left_obstacle = true;
-      % wb_console_print(sprintf('    Left Obs found at %g', i + 80), WB_STDOUT);
-      break;
-    end
-  end
+  % update speeds based on keyboard input
+
+  key = wb_keyboard_get_key();
   
-  if right_obstacle
-    left_speed  = -0.3 * LEFT_BASE_SPEED;
-    right_speed = 0.3 * RIGHT_BASE_SPEED;
-    wb_console_print(sprintf('        Turn Left'), WB_STDOUT);
-  elseif left_obstacle
-    left_speed  = 0.3 * LEFT_BASE_SPEED;
-    right_speed = -0.3 * RIGHT_BASE_SPEED;
-    wb_console_print(sprintf('        Turn Right'), WB_STDOUT);
+  if key > 0
+    if key == WB_KEYBOARD_UP
+      left_speed  = LEFT_BASE_SPEED;
+      right_speed = RIGHT_BASE_SPEED;
+    elseif key == WB_KEYBOARD_RIGHT
+      left_speed  = LEFT_BASE_SPEED;
+      right_speed = -RIGHT_BASE_SPEED;
+    elseif key == WB_KEYBOARD_LEFT
+      left_speed  = -LEFT_BASE_SPEED;
+      right_speed = RIGHT_BASE_SPEED;
+    else
+      % wb_console_print(sprintf('STOPPING'), WB_STDOUT);
+      % save('../../webotsLidarReadings.mat', 'webots_scans')
+      % return
+    end
   end
   
   wb_motor_set_velocity(left_motor, left_speed);
   wb_motor_set_velocity(right_motor, right_speed);
-  
+
   values = wb_supervisor_field_get_sf_vec3f(trans_field);
   % wb_console_print(sprintf('MY_ROBOT is at position: %g %g %g\n', values(1), values(2), values(3)), WB_STDOUT);
+
+  point_cloud = wb_lidar_get_point_cloud(lidar);
   num_points = wb_lidar_get_number_of_points(lidar);
   point_cloud = wb_lidar_get_point_cloud(lidar);
-  
   
   coordinates = zeros(num_points, 2);
   for i = 1:num_points
@@ -105,15 +86,13 @@ while wb_robot_step(TIME_STEP) ~= -1
     coordinates(i, 1) = point_cloud(i).x;
     coordinates(i, 2) = point_cloud(i).z;
   end
+  
   lidar_scan = lidarScan(coordinates);
   webots_scans{scan_index} = lidar_scan;
-    
-  if scan_index == num_scans
-    save('../../webotsLidarReadings.mat', 'webots_scans')
-    return
-  end
-  scan_index = scan_index + 1;
+
+  wb_console_print(sprintf('scan_index: %g', scan_index), WB_STDOUT);
   
+  scan_index = scan_index + 1;
   
 end
 
