@@ -2,6 +2,8 @@ TIME_STEP = 100;
 
 robot_node = wb_supervisor_node_get_self();
 trans_field = wb_supervisor_node_get_field(robot_node, 'translation');
+or_field = wb_supervisor_node_get_field(robot_node, 'rotation');
+
 origin_location = wb_supervisor_field_get_sf_vec3f(trans_field);
 
 % get the motor devices
@@ -37,9 +39,12 @@ load('occupancy_grid.mat');
 path = [];
 path_state_index = 5;
 
-while wb_robot_step(TIME_STEP) ~= -1  
 
+while wb_robot_step(TIME_STEP) ~= -1  
+  
   curr_location = wb_supervisor_field_get_sf_vec3f(trans_field);
+  curr_or = wb_supervisor_field_get_sf_rotation(or_field);
+
   wb_console_print(sprintf('LOCATION: (x=%g, z=%g) ', curr_location(1), curr_location(3)), WB_STDOUT);
    
   if ~isfile('fallen_person_coordinate.mat')
@@ -72,7 +77,7 @@ while wb_robot_step(TIME_STEP) ~= -1
     path = build_path(curr_location, fallen_person_coordinate, map);
   end
   
-  [left_velocity_mult, right_velocity_mult, path_state_index] = follow_path(path, curr_location, path_state_index);
+  [left_velocity_mult, right_velocity_mult, path_state_index] = follow_path(path, curr_location, path_state_index, curr_or);
   
   wb_motor_set_velocity(left_motor, BASE_SPEED * left_velocity_mult);
   wb_motor_set_velocity(right_motor, BASE_SPEED * right_velocity_mult);
@@ -82,7 +87,7 @@ while wb_robot_step(TIME_STEP) ~= -1
 
 end
 
-function [left_velocity_mult, right_velocity_mult, path_state_index] = follow_path(path, curr_location, path_state_index)
+function [left_velocity_mult, right_velocity_mult, path_state_index] = follow_path(path, curr_location, path_state_index, curr_or)
   wb_console_print(sprintf('    FOLLOWING PATH'), WB_STDOUT);
   
   x_origin_webots = 1.51232;
@@ -107,6 +112,7 @@ function [left_velocity_mult, right_velocity_mult, path_state_index] = follow_pa
     return;
   end
   
+<<<<<<< HEAD
   
   % if is_correct_angle()
     
@@ -117,6 +123,36 @@ function [left_velocity_mult, right_velocity_mult, path_state_index] = follow_pa
     % TODO implement angle bs
     % ur jobbo :) ? :'( 
   % end
+=======
+  if is_correct_angle(curr_location, target_coordinate, curr_or)
+    wb_console_print(sprintf('MOVING FORWARD'), WB_STDOUT);
+
+    left_velocity_mult = 1;
+    right_velocity_mult = 1;
+  
+  else
+    curr_x = curr_location(1);
+    curr_z = curr_location(3);
+  
+    target_x = target_coordinate(1);
+    target_z = target_coordinate(2);
+  
+    target_alpha1 = atan((target_x-curr_x)/(target_z-curr_z));
+
+    target_alpha = atan2((target_z-curr_z),(target_x-curr_x));
+    curr_alpha = curr_or(4);
+    
+    if round(target_alpha,3) < round(curr_alpha,3)
+    wb_console_print(sprintf('curr alpha: %g, target alpha: %g.\n', round(curr_alpha,3), round(target_alpha,3)), WB_STDOUT);
+    left_velocity_mult = -0.1;
+    right_velocity_mult = 0.1;
+    else
+    wb_console_print(sprintf('curr alpha: %g, target alpha: %g.\n', round(curr_alpha,3), round(target_alpha,3)), WB_STDOUT);
+    left_velocity_mult = 0.1;
+    right_velocity_mult = -0.1;
+    end
+  end
+>>>>>>> 74fcaf1601ab71927800ee7eb4fde36d9833f3f1
   
 end
 
@@ -135,7 +171,7 @@ function has_reached = has_reached_coordinate(curr_location, target_coordinate)
   dist_to_move = sqrt(x_sq + z_sq);
   wb_console_print(sprintf('    %g ditance left to move.\n', dist_to_move), WB_STDOUT);  
   
-  has_reached = dist_to_move < 0.05;
+  has_reached = dist_to_move < 0.2;
 
 end
 
@@ -168,3 +204,20 @@ function path = build_path(curr_location, fallen_person_coordinate, map)
   save('path.mat', 'path');
   
 end
+
+function correct_alpha = is_correct_angle(curr_location, target_coordinate, curr_or)
+  
+  curr_x = curr_location(1);
+  curr_z = curr_location(3);
+  
+  target_x = target_coordinate(1);
+  target_z = target_coordinate(2);
+  
+  target_alpha = atan((target_x-curr_x)/(target_z-curr_z));
+
+  target_alpha1 = atan2((target_z-curr_z),(target_x-curr_x));
+  curr_alpha = curr_or(4);
+  
+  correct_alpha = (abs(target_alpha) > abs(curr_alpha) - 0.05) && (abs(target_alpha) < abs(curr_alpha) + 0.05);
+end
+  
