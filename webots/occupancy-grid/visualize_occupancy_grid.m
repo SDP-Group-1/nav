@@ -1,4 +1,4 @@
-load('./webotsLidarReadings.mat');
+load('webotsLidarReadings.mat');
 load('offlineSlamData.mat');
 
 % for movement_threshold = 0:1
