@@ -90,7 +90,7 @@ while wb_robot_step(TIME_STEP) ~= -1
   dist_to_move = sqrt(x_sq + z_sq);
   wb_console_print(sprintf('    %g distance left to move.\n', dist_to_move), WB_STDOUT);  
   
-  if dist_to_move < 0.4
+  if dist_to_move < 0.5
     break;
   end
   
